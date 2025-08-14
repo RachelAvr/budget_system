@@ -5,27 +5,30 @@ import 'handsontable/styles/ht-theme-main.min.css';
 import { registerAllModules } from 'handsontable/registry';
 import { HotTable, HotColumn } from '@handsontable/react';
 import AddNewExpense from './AddNewExpense.jsx'
-import {useRef,useState} from 'react';
+import {useState,useEffect} from 'react';
 registerAllModules();
 
 
 export default function ExpenseTable(){
     const [data, setData]= useState([])
-    //const hotTableRef = useRef(null);
 
-     const handleAddExpense = (newRow) => {setData((prev) => [...prev, newRow]); };
+    const handleAddExpense = (newRow) => {setData((prev) => [...prev, newRow]); };
 
      
-     const total = data.reduce((sum, row) => {
+    const total = data.reduce((sum, row, index) => {
+        console.log(`[totalPlanned]  ${index}: sum=${sum}, adding ${row.Actual}`)
         const num = parseFloat(row.Actual);
         return sum + (isNaN(num) ? 0 : num);}, 0);
+    
+    //useEffect(()=>{console.log(`[totalPlanned]  ${index}: sum=${sum}, adding ${row.Actual}`)},[row.Actual])
+    useEffect(()=>{console.log(`[totalPlanned] total sum was updated ${total}`)}, [total]);
+        
 
     return(
         <>
-          <h1> "טבלת הוצאות"</h1>
+          <h1> טבלת הוצאות</h1>
           <AddNewExpense onAdd={handleAddExpense}/>
             <HotTable
-               // ref={hotTableRef}
                 theme="ht-theme-main-dark-auto"
                 data={data}
                 rowHeaders={true}
@@ -35,7 +38,7 @@ export default function ExpenseTable(){
             <HotColumn title="Planned" data="Planned" width="100" type="numeric"></HotColumn>
             <HotColumn title="Actual" data="Actual" width="100" ></HotColumn>
           </HotTable>
-          <div>`total: {total}</div>
+          <div>total: {total}</div>
           </>
 
     )

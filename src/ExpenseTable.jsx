@@ -5,22 +5,24 @@ import 'handsontable/styles/ht-theme-main.min.css';
 import { registerAllModules } from 'handsontable/registry';
 import { HotTable, HotColumn } from '@handsontable/react';
 import AddNewExpense from './AddNewExpense.jsx'
-import {useState,useEffect} from 'react';
+import {useState,useEffect, useRef} from 'react';
+
+
 registerAllModules();
 
 
 export default function ExpenseTable(){
+    
+  
     const [data, setData]= useState([])
 
     const handleAddExpense = (newRow) => {setData((prev) => [...prev, newRow]); };
 
      
     const total = data.reduce((sum, row, index) => {
-        console.log(`[totalPlanned]  ${index}: sum=${sum}, adding ${row.Actual}`)
         const num = parseFloat(row.Actual);
         return sum + (isNaN(num) ? 0 : num);}, 0);
     
-    //useEffect(()=>{console.log(`[totalPlanned]  ${index}: sum=${sum}, adding ${row.Actual}`)},[row.Actual])
     useEffect(()=>{console.log(`[totalPlanned] total sum was updated ${total}`)}, [total]);
         
 

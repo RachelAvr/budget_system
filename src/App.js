@@ -6,7 +6,7 @@ import ExpenseTable from './ExpenseTable.jsx'
 function App() {
   return (
     <div className="App">
-      <ExpenseTable/>
+    <ExpenseTable/>
       
       
     </div>

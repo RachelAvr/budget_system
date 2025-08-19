@@ -6,14 +6,16 @@ import { registerAllModules } from 'handsontable/registry';
 import { HotTable, HotColumn } from '@handsontable/react';
 import AddNewExpense from './AddNewExpense.jsx'
 import {useState,useEffect, useRef} from 'react';
+import { Hook, Console, Decode, Unhook } from 'console-feed'
+import ConsoleLogs from './ConsoleLogs'
+
 
 
 registerAllModules();
 
 
 export default function ExpenseTable(){
-    
-  
+    const [logs, setLogs]= useState([])
     const [data, setData]= useState([])
 
     const handleAddExpense = (newRow) => {setData((prev) => [...prev, newRow]); };
@@ -24,6 +26,11 @@ export default function ExpenseTable(){
         return sum + (isNaN(num) ? 0 : num);}, 0);
     
     useEffect(()=>{console.log(`[totalPlanned] total sum was updated ${total}`)}, [total]);
+    useEffect(() => {
+                const hookedConsole = Hook(window.console,
+                (log) => setLogs((currLogs) => [...currLogs, log]),false)
+                return () => Unhook(hookedConsole)
+        }, [])
         
 
     return(
@@ -41,6 +48,7 @@ export default function ExpenseTable(){
             <HotColumn title="Actual" data="Actual" width="100" ></HotColumn>
           </HotTable>
           <div>total: {total}</div>
+          <ConsoleLogs logs={logs}/>
           </>
 
     )

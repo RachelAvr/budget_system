@@ -25,3 +25,5 @@ This project uses Handsontable under the Non-Commercial License.
 You may not use Handsontable for commercial purposes unless you obtain a commercial license from Handsontable.
 See https://github.com/handsontable/handsontable/blob/master/handsontable-non-commercial-license.pdf
  for full details.
+
+ this project uses console-feed that has MIT license.

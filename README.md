@@ -23,6 +23,8 @@ please review befor use
 handsontable-non-commercial-license.pdf
 https://github.com/handsontable/handsontable/blob/master/handsontable-non-commercial-license.pdf
 
+this project uses console-feed that has MIT license.
+
 
 
 

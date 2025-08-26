@@ -2,17 +2,26 @@ import {useState,useEffect} from 'react';
 
 export default function AddNewExpense({onAdd}){
     const [category ,setCategory]= useState('');
-    const [planned ,setPlanned]= useState('');
-    const [actual ,setActual]= useState('');
-
+    const [planned, setPlanned] = useState(0);
+    const [actual, setActual] = useState(0);
+    //*You’re storing numbers as strings in state (useState(''))*//
+    
       useEffect(() => {
         console.log('[addNewExpense] component mounted');}, []);
 
+    
+    //*the form allows submitting empty values. Add required attributes or guard before onAdd*//
     const handleSubmit = (e)=>{
             console.log('[addNewExpense] user clicked add')
             e.preventDefault()
-            onAdd({Category:category , Planned:Number(planned), Actual:Number(actual)});
-            console.log('[addNewExpense] a row wad added to the table', [category, planned, actual])
+            if (!category || !planned || !actual) {
+            alert("Please fill out all fields");
+            return;
+    }
+            //*You’re mixing lowercase (planned) and uppercase (Planned)*//
+            onAdd({ category, planned: Number(planned), actual: Number(actual) });
+            //*was instead of wad*//
+            console.log('[addNewExpense] a row was added to the table', [category, planned, actual])
             setCategory('');
             setPlanned('');
             setActual('');
@@ -30,8 +39,8 @@ export default function AddNewExpense({onAdd}){
                     <option value="Car">Car</option>
                 </select>
                 </label>
-                <input type="number" placeholder="Planned cost" value={planned} onChange={(e)=>{setPlanned(e.target.value);console.log('user typed planned cost', e.target.value)}}></input>
-                <input type="number" placeholder="Actual cost" value={actual} onChange={(e)=>{setActual(e.target.value);console.log('user typed planned cost', e.target.value)}}></input>
+                <input type="number" placeholder="Planned cost" value={planned} onChange={(e) => setPlanned(Number(e.target.value))};console.log('user typed planned cost', e.target.value)}}></input>
+                <input type="number" placeholder="Actual cost" value={actual} onChange={(e)=> setActual(Number(e.target.value))};console.log('user typed planned cost', e.target.value)}}></input>
                 <button type="submit">Add</button>
 
 
